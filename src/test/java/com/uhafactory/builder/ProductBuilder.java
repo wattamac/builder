@@ -9,11 +9,6 @@ import java.util.List;
  * Created by lineplus on 2016. 6. 1..
  */
 public class ProductBuilder extends AbstractBuilder<Product> {
-    @Override
-    protected Class getTargetClass() {
-        return Product.class;
-    }
-
     private long id;
     private String name = "name";
     private DiscountBuilder discount = DiscountBuilder.aDiscount();

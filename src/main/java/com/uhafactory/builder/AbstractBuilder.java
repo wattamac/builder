@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ public abstract class AbstractBuilder<T> {
 
     public T build() {
         try {
-            Object targetObject = getTargetClass().newInstance();
+            Object targetObject = ((Class)((ParameterizedType)this.getClass().
+                    getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();
             Field[] fields = this.getClass().getDeclaredFields();
 
             for (Field field : fields) {
@@ -48,8 +50,6 @@ public abstract class AbstractBuilder<T> {
         targetField.setAccessible(true);
         targetField.set(target, source);
     }
-
-    protected abstract Class getTargetClass();
 
     enum SupportClassType {
         ABSTRACT_BUILDER {
